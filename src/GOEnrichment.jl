@@ -1,5 +1,12 @@
 module GOEnrichment
 
-## hello now then
+#using LightGraphs
+### Gene ontology enrichments
+export parseontology
+include("parse_ontology.jl")
+
+
+
+
 
 end # module
