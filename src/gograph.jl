@@ -26,7 +26,7 @@ function ontologygraph(ontol, ontology=biological_process)
             add_edge!(gograph, gi, graphindex[j])
         end
     end
-    gographclosed = transitiveclosure(gograph)
+    gographclosed = transitiveclosure(gograph, true)
     (gids=gids, graphindex=graphindex, gograph=gograph, gographclosed=gographclosed)
 end
 
@@ -54,3 +54,14 @@ end
 
 goancestors(gg, gis::AbstractVector)  = mapreduce(gi -> goancestors(gg, gi), vcat, gis) |> unique
 goancestors(gg, gi) = gg.gids[neighbors(gg.gographclosed, gg.graphindex[gi])]
+
+
+function test_ex(gene, exannot, annot)
+    a = annot["P"][gene]
+    e = exannot["P"][gene]
+    @show setdiff(a, e)
+    all([x ∈ e for x in a])
+
+end
+
+test_ex("gene5966|vegt", exannot, annot)

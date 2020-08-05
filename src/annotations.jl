@@ -39,3 +39,17 @@ function load_annot_long(file, ontol ; genecol=:Gene, gocol=:GOID)
     annot
 
 end
+
+
+reverseannotation(annot) = Dict(o => reverse_ontol_annot(ann) for (o, ann) in annot)
+
+function reverse_ontol_annot(ann)
+    r = Dict{Int, Vector{String}}()
+
+    for (gene, ids) in ann
+        for id in ids
+            r[id] = push!(get(r, id, String[]), gene)
+        end
+    end
+    r
+end
