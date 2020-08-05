@@ -24,11 +24,16 @@ mutable struct GOTerm
     GOTerm() = new(0, "", gene_ontology, "", Int[], Int[], true, 0, Int[], Int[], Int[], Int[], Int[])
 end
 
+
+showgoset(gots) = show(IOContext(stdout, :compact=>true), gots)
+
 function Base.show(io::IO, got::GOTerm)
     if get(io, :compact, false)
+        print(io, "\n")
         print(io, num_to_goid(got.id))
         print(io, "\t", got.namespace)
         print(io, "\t", got.name)
+
     else
         println(io, "GO Term")
         println(io, "id                   : ", num_to_goid(got.id))

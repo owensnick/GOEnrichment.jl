@@ -29,3 +29,28 @@ function ontologygraph(ontol, ontology=biological_process)
     gographclosed = transitiveclosure(gograph)
     (gids=gids, graphindex=graphindex, gograph=gograph, gographclosed=gographclosed)
 end
+
+
+function extendannotation(annot, gographs)
+
+    exannot = Dict{String, Dict{String, Vector{Int}}}()
+    for (ont, ann) in annot
+        exannot[ont] = Dict{String, Vector{Int}}()
+        for (gid, gis) in ann
+            try
+                exannot[ont][gid] = goancestors(gographs[ont], gis)
+            catch
+                @show gid
+                @show gis
+                @show ont
+
+                error("")
+            end
+        end
+    end
+
+    exannot
+end
+
+goancestors(gg, gis::AbstractVector)  = mapreduce(gi -> goancestors(gg, gi), vcat, gis) |> unique
+goancestors(gg, gi) = gg.gids[neighbors(gg.gographclosed, gg.graphindex[gi])]

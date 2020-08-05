@@ -20,11 +20,12 @@ function load_annot_long(file, ontol ; genecol=:Gene, gocol=:GOID)
     annots = 0
     for (gene, goid) in zip(table[!, genecol], table[!, gocol])
         gid = goid_to_num(goid)
+
         if !haskey(ontol, gid)
             missingids += 1
             continue
         end
-
+        gid = ontol[gid].id ## remove alt ids
         ns = namedict[ontol[gid].namespace]
 
         !haskey(annot[ns], gene)  && (annot[ns][gene] = Int[])
