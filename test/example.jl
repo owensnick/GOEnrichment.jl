@@ -17,3 +17,12 @@ enrichtest(data.ClusterBothBIC .== 6, background, exannot, ontol) |> display
 
 rexannot = reverseannotation(exannot)
 rannot = reverseannotation(annot)
+
+Z = enrichtest(data.ClusterBothBIC .== 6, background, exannot, ontol)
+
+for row in eachrow(Z)
+    id = goid_to_num(row.GT)
+    for g in row.Genes
+        @assert id ∈ exannot["P"][g]
+    end
+end

@@ -50,7 +50,10 @@ function enrichtest(genesel, background, exannot, ontol, ontology="P", minannot=
     fgts = gts[filtind]
 
     df = DataFrame(GT=num_to_goid.(fgts), Term=[ontol[t].name for t in fgts], FG=A[filtind], BG=getindex.(Ref(bgc), fgts), OR=OR, PFT=PFT)
-    #, Genes=getindex.(Ref(id_gene), fgts))
+    re = reverseannotation(exannot)
+    df[!, :Genes] = [intersect(re[ontology][gid], background[genesel]) for gid in fgts]
 
-    sort!(df[df.PFT .< pthresh, :], :PFT)
+    sdf = sort(df[df.PFT .< pthresh, :], :PFT)
+
+    sdf
 end
