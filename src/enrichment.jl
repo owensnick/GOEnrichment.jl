@@ -51,9 +51,19 @@ function enrichtest(genesel, background, exannot, ontol, ontology="P", minannot=
 
     df = DataFrame(GT=num_to_goid.(fgts), Term=[ontol[t].name for t in fgts], FG=A[filtind], BG=getindex.(Ref(bgc), fgts), OR=OR, PFT=PFT)
     re = reverseannotation(exannot)
-    df[!, :Genes] = [intersect(re[ontology][gid], background[genesel]) for gid in fgts]
+    df[!, :Genes] = [join(reducedgenename.(intersect(re[ontology][gid], background[genesel])), ", ") for gid in fgts]
 
     sdf = sort(df[df.PFT .< pthresh, :], :PFT)
 
     sdf
+end
+
+
+function reducedgenename(g)
+    fields = split(g, "|")
+    if length(fields) == 1
+        first(fields)
+    else
+        last(fields)
+    end
 end
