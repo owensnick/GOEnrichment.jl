@@ -25,6 +25,15 @@ function ontologygraph(ontol, ontology=biological_process)
         for j in gt.part_of
             add_edge!(gograph, gi, graphindex[j])
         end
+        for j in gt.positively_regulates
+            add_edge!(gograph, gi, graphindex[j])
+        end
+        for j in gt.negatively_regulates
+            add_edge!(gograph, gi, graphindex[j])
+        end
+        for j in gt.regulates
+            add_edge!(gograph, gi, graphindex[j])
+        end
     end
     gographclosed = transitiveclosure(gograph, true)
     (gids=gids, graphindex=graphindex, gograph=gograph, gographclosed=gographclosed)
@@ -64,4 +73,4 @@ function test_ex(gene, exannot, annot)
 
 end
 
-test_ex("gene5966|vegt", exannot, annot)
+#test_ex("gene5966|vegt", exannot, annot)
