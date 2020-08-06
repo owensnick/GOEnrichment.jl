@@ -165,6 +165,12 @@ end
 function addterm!(go_terms, go_term)
     go_terms[go_term.id] = go_term
     for gt in go_term.alt_id
+        if haskey(go_terms, gt)
+            println("Overwriting error:")
+            display(go_terms[gt])
+            display(go_term)
+            error("Overwrite")
+        end
         go_terms[gt] = go_term
     end
 end

@@ -20,12 +20,24 @@ function load_annot_long(file, ontol ; genecol=:Gene, gocol=:GOID)
     annots = 0
     for (gene, goid) in zip(table[!, genecol], table[!, gocol])
         gid = goid_to_num(goid)
-
+        track = false
+        if (gid == 45545) && (gene == "gene6898|chrd")
+            @show gene, goid, gid
+            track = true
+        end
         if !haskey(ontol, gid)
             missingids += 1
+            if track
+                println("its missing")
+                error("")
+            end
             continue
         end
+
         gid = ontol[gid].id ## remove alt ids
+        if track
+            @show "U", gene, goid, gid
+        end
         ns = namedict[ontol[gid].namespace]
 
         !haskey(annot[ns], gene)  && (annot[ns][gene] = Int[])
@@ -39,7 +51,7 @@ function load_annot_long(file, ontol ; genecol=:Gene, gocol=:GOID)
     annot
 
 end
-
+annot = load_annot_long("c:\\home\\resource\\Xt\\9.1\\go_b2g_xb_lf.map", ontol)
 
 reverseannotation(annot) = Dict(o => reverse_ontol_annot(ann) for (o, ann) in annot)
 

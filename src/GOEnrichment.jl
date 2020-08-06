@@ -5,17 +5,14 @@ using CSV
 using LightGraphs
 using DataStructures
 using DataFrames
+using HypothesisTests
 #using LightGraphs
 ### Gene ontology enrichments
-export parseontology
+export parseontology, load_annot_long, ontologygraphs, extendannotation, enrichtest
+
 include("parse_ontology.jl")
 include("annotations.jl")
 include("gograph.jl")
-ontol = parseontology("c:\\home\\resource\\geneontology\\go-basic.obo")
-annot = load_annot_long("c:\\home\\resource\\Xt\\9.1\\go_b2g_xb_lf.map", ontol)
-gographs = ontologygraphs(ontol)
-exannot = extendannotation(annot, gographs)
+include("enrichment.jl")
 
-rexannot = reverseannotation(exannot)
-rannot = reverseannotation(annot)
 end # module
