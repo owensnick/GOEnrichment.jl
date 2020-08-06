@@ -3,6 +3,14 @@ uuid = "79061242-bde6-4275-801a-9e3f264c1a5e"
 authors = ["owensnick <owensnick@gmail.com>"]
 version = "0.1.0"
 
+[deps]
+CSV = "336ed68f-0bac-5ca0-87d4-7b16caf5d00b"
+DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
+DataStructures = "864edb3b-99cc-5e75-8d2d-829cb0a9cfe8"
+HypothesisTests = "09f84164-cd44-5f33-b23f-e6b0d136a0d5"
+LightGraphs = "093fc24a-ae57-5d10-9952-331d41423f4d"
+Printf = "de0858da-6303-5e67-8744-51eddeeeb8d7"
+
 [compat]
 julia = "1"
 

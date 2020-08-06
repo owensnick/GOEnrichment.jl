@@ -51,7 +51,6 @@ function load_annot_long(file, ontol ; genecol=:Gene, gocol=:GOID)
     annot
 
 end
-annot = load_annot_long("c:\\home\\resource\\Xt\\9.1\\go_b2g_xb_lf.map", ontol)
 
 reverseannotation(annot) = Dict(o => reverse_ontol_annot(ann) for (o, ann) in annot)
 
